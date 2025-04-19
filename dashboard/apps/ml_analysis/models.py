@@ -85,5 +85,5 @@ def create_post_analysis(sender, instance, created, **kwargs):
     if created:
         PostAnalysis.objects.create(post=instance)
         # Schedule async update after some time
-        from ml_analysis.tasks import analyze_post_task
+        from dashboard.apps.ml_analysis.tasks import analyze_post_task
         analyze_post_task.apply_async(args=[instance.id], countdown=3600)  # Run after 1 hour

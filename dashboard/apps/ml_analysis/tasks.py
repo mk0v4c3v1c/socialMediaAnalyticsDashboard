@@ -1,5 +1,5 @@
 from celery import shared_task
-from ml_analysis.models import PostAnalysis
+from dashboard.apps.ml_analysis.models import PostAnalysis
 from dashboard.apps.posts.models import Post
 from dashboard.apps.analytics.models import MLModel
 from django.utils import timezone
