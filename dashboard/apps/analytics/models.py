@@ -1,5 +1,5 @@
 from django.db import models
-from posts.models import Post
+from dashboard.apps.posts.models import Post
 
 
 class PostStat(models.Model):
@@ -17,7 +17,7 @@ class PostStat(models.Model):
 
     def calculate_engagement(self):
         # Basic engagement rate calculation
-        from users.models import User
+        from dashboard.apps.users.models import User
         total_users = User.objects.count()
         if total_users > 0:
             self.engagement_rate = (self.like_count + self.comment_count) / total_users * 100

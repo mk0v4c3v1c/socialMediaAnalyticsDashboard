@@ -2,7 +2,7 @@ import pandas as pd
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse
-from posts.models import Post
+from dashboard.apps.posts.models import Post
 from dashboard.apps.analytics.models import PostStat
 from datetime import datetime, timedelta
 from io import BytesIO

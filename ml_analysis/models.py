@@ -1,16 +1,12 @@
 from django.db import models
-from posts.models import Post
+from dashboard.apps.posts.models import Post
 import joblib
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LinearRegression
-import pandas as pd
 import numpy as np
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from datetime import datetime, timedelta
 import os
 from django.conf import settings
-from posts.models import PostStat
+from dashboard.apps.posts.models import PostStat
 
 
 class MLModel(models.Model):
