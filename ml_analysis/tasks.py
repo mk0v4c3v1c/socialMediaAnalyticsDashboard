@@ -1,16 +1,9 @@
 from celery import shared_task
 from ml_analysis.models import PostAnalysis
 from posts.models import Post
-from analytics.models import PostStat, MLModel
+from dashboard.apps.analytics.models import MLModel
 from django.utils import timezone
-from django.db import models, transaction
-from datetime import timedelta
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-import pandas as pd
-import joblib
+from django.db import models
 import os
 import logging
 from django.conf import settings

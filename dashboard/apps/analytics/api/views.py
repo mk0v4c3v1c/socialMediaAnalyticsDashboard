@@ -1,11 +1,9 @@
 import pandas as pd
-from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import HttpResponse
 from posts.models import Post
-from analytics.models import PostStat
-from users.models import User
+from dashboard.apps.analytics.models import PostStat
 from datetime import datetime, timedelta
 from io import BytesIO
 
