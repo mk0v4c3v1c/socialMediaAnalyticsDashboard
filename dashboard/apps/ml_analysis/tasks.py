@@ -4,6 +4,7 @@ from dashboard.apps.posts.models import Post
 from dashboard.apps.analytics.models import MLModel
 from django.utils import timezone
 from django.db import models
+from ml_analysis.models import SentimentAnalysis
 import os
 import logging
 from django.conf import settings
@@ -87,3 +88,26 @@ def cleanup_old_models(model_dir, keep_versions=5):
                 os.remove(os.path.join(model_dir, f))
             except OSError as e:
                 logger.error(f"Error removing old model file {f}: {str(e)}")
+
+@shared_task
+def analyze_new_posts():
+    """Analyze sentiment for posts that haven't been analyzed yet."""
+    BATCH_SIZE = 1000
+    
+    try:
+        # Process in batches to avoid memory issues
+        new_posts = Post.objects.filter(sentiment__isnull=True)
+        total_posts = new_posts.count()
+        
+        for i in range(0, total_posts, BATCH_SIZE):
+            batch = new_posts[i:i+BATCH_SIZE]
+            for post in batch:
+                try:
+                    SentimentAnalysis.analyze_post(post)
+                except Exception as e:
+                    logger.error(f"Failed to analyze post {post.id}: {str(e)}")
+                    continue
+                    
+    except Exception as e:
+        logger.error(f"Batch sentiment analysis failed: {str(e)}")
+        raise
