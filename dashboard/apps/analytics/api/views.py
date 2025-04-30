@@ -1,7 +1,9 @@
 import pandas as pd
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponse
+from django.db.models import Count, Avg
 from dashboard.apps.posts.models import Post
 from dashboard.apps.analytics.models import PostStat
 from datetime import datetime, timedelta
@@ -9,6 +11,8 @@ from io import BytesIO
 
 
 class EngagementStatsAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         # Time filters
         time_range = request.GET.get('range', '7d')
